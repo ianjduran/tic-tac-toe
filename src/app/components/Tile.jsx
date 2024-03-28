@@ -1,5 +1,4 @@
-import { useState } from "react"
-
+// Tile Component
 export default function Tile({value,className="", onSquareClick}){
 
 

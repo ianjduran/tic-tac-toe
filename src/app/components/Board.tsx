@@ -2,10 +2,17 @@
 import Tile from './Tile'
 import { useState } from 'react'
 
+// Board component
 export default function Board(){
     const [xIsNext, setXIsNext] = useState(true);
     const [squares,setSquares] = useState(Array(9).fill(null))
-
+    
+    /**
+     * Calcula el jugador de 3 en raya.
+     *
+     * @param {Array} squares arreglo de las celdas
+     * @return {string} valor del ganador (X o O).
+     */
     function calculateWinner(squares: any) {
         const lines = [
           [0, 1, 2],
@@ -25,7 +32,12 @@ export default function Board(){
         }
         return null;
       }
-
+    
+    /**
+     * Modifica el valor de las celdas del tablero.
+     *
+     * @param {number} i celda a ser modificada
+     */
     function handleClick(i: number) {
         if(squares[i] || calculateWinner(squares)) {
             return;
@@ -40,6 +52,7 @@ export default function Board(){
         setXIsNext(!xIsNext);
     }
 
+    // Calcula el estado del juego
     const winner = calculateWinner(squares);
     let status;
     if(winner) {
@@ -48,6 +61,7 @@ export default function Board(){
         status = "Next Turn: " + (xIsNext ? "X" : "O");
     }
 
+    // Reinicia el juego
     function restartGame(){
         setXIsNext(true);
         setSquares(Array(9).fill(null));
@@ -55,7 +69,6 @@ export default function Board(){
 
     return (
         <>
-            
             <div>{status}</div>
             <div className='grid grid-cols-3 row-span-3 gap-4 mb-4'>
                 <Tile value={squares[0]} onSquareClick={() => handleClick(0)} ></Tile>
